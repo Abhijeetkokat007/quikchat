@@ -1,12 +1,24 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
+import axios from "axios";
+import { Link , useNavigate} from 'react-router-dom';
 import Logo from "./../../assets/logo.svg";
 import "./Register.css"
 import { useState, useEffect } from 'react';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"
 
+
 function Register() {
+
+  const navigate = useNavigate();
+  const toastOptions = {
+    position: "bottom-right",
+    autoClose: 8000,
+    pauseOnHover: true,
+    draggable: true,
+    theme: "dark",
+  };
+
   const [values, setValue] = useState({
     username: "",
     email: "",
@@ -14,17 +26,24 @@ function Register() {
     confirmPassword: "",
   })
 
-  const toastOptions = {
-    position: "bottom-right",
-    autoClose: 8000,
-    pauseOnHover: true,
-    draggable: true,
-    theme: "dark",
-  }
+  useEffect(() => {
+    if (localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)) {
+      navigate("/");
+    }
+  }, []);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    handleValidation();
+  // const toastOptions = {
+  //   position: "bottom-right",
+  //   autoClose: 8000,
+  //   pauseOnHover: true,
+  //   draggable: true,
+  //   theme: "dark",
+  // }
+
+  
+
+  const handleChange = (event) => {
+    setValue({ ...values, [event.target.name]: event.target.value })
   }
 
   const handleValidation = () => {
@@ -33,23 +52,50 @@ function Register() {
       toast.error("password and confirm password should be same", toastOptions);
       return false;
     }
-    else if (username.length < 5) {
+    else if (username.length < 4) {
       toast.error("Username should be greater than 5 characters", toastOptions);
+      return false;
     }
-    else if (password.length < 8) {
+    else if (password == "") {
       toast.error("password should be equal or greater than 8 characters", toastOptions);
       return false;
     }
     else if (email === ""){
       toast.error("email is required ", toastOptions);
+      return false;
     }
     return true;
   }
   
-
-  const handleChange = (event) => {
-    setValue({ ...values, [event.target.name]: event.target.values })
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if(handleValidation()) {
+     try{
+      const { password,  username, email } = values;
+      const {data} = await axios.post("/api/auth/register", {
+       username,
+       password,
+       email,
+      })
+      if (data.status === false) {
+        toast.error(data.msg, toastOptions);
+      }
+      if (data.status === true) {
+        localStorage.setItem(
+          'quikchat-user',
+          JSON.stringify(data.user)
+        );
+        navigate("/");
+      }
+     }
+     catch(e){
+      toast.error(e.message, toastOptions);
+     }
+      
+    }
   }
+
+  
   return (
     <>
       <div className='form-container'>
@@ -62,25 +108,25 @@ function Register() {
             type='text'
             placeholder='Username'
             name='username'
-            onChange={(e) => { handleChange(e) }}
+            onChange={(e) => { handleChange(e)}}
           />
           <input
             type='email'
             placeholder='Email'
             name='email'
-            onChange={(e) => { handleChange(e) }}
+            onChange={(e) => { handleChange(e)}}
           />
           <input
             type='password'
             placeholder='Password'
             name='password'
-            onChange={(e) => { handleChange(e) }}
+            onChange={(e) => { handleChange(e)}}
           />
           <input
             type='password'
             placeholder=' Confirm password'
             name='confirmPassword'
-            onChange={(e) => { handleChange(e) }}
+            onChange={(e) => { handleChange(e)}}
           />
           <button type='submit'> Create User </button>
           <span>already have an account ? <Link to="/">Login</Link></span>
