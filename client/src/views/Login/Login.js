@@ -32,13 +32,7 @@ function Login() {
     }
   }, []);
 
-  // const toastOptions = {
-  //   position: "bottom-right",
-  //   autoClose: 8000,
-  //   pauseOnHover: true,
-  //   draggable: true,
-  //   theme: "dark",
-  // }
+  
 
   
 
@@ -49,7 +43,7 @@ function Login() {
   const handleValidation = () => {
     const { password, username } = values;
     if (password === "") {
-      toast.error("password and confirm password should be same", toastOptions);
+      toast.error("Enter Correct Password ", toastOptions);
       return false;
     }
     else if (username.length === "") {
@@ -65,7 +59,7 @@ function Login() {
     if(handleValidation()) {
      try{
       const { password,  username } = values;
-      const {data} = await axios.post("/api/auth/register", {
+      const {data} = await axios.post("/api/auth/login", {
        username,
        password,
       
@@ -78,6 +72,7 @@ function Login() {
           'quikchat-user',
           JSON.stringify(data.user)
         );
+        toast.error(" Login Successfully ", toastOptions);
         navigate("/");
       }
      }
@@ -113,7 +108,7 @@ function Login() {
           />
          
           <button type='submit'> Login In </button>
-          <span>create an  new account ? <Link to="/register">Register</Link></span>
+          <span>Don't have an  account ? <Link to="/register">Register</Link></span>
 
         </form>
       </div>
