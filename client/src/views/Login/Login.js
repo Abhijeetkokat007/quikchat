@@ -89,8 +89,8 @@ function Login() {
       <div className='form-container'>
         <form onSubmit={(event) => { handleSubmit(event) }}>
           <div className='brand'>
-            <img src={Logo} alt='' />
-            <h1>quikchat</h1>
+            <img className='img-r-logo' src={Logo} alt='' />
+            <h1 className='h1-r-heding'>quikchat</h1>
           </div>
           <input
             type='text'
@@ -98,7 +98,7 @@ function Login() {
             name='username'
             onChange={(e) => { handleChange(e)}}
             min="4"
-          />
+          /> 
          
           <input
             type='password'
@@ -107,8 +107,8 @@ function Login() {
             onChange={(e) => { handleChange(e)}}
           />
          
-          <button type='submit'> Login In </button>
-          <span>Don't have an  account ? <Link to="/register">Register</Link></span>
+          <button className='btn-submit' type='submit'> Login In </button>
+          <span className='text-r-span'>Don't have an  account ? <Link to="/register">Register</Link></span>
 
         </form>
       </div>

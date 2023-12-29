@@ -1,14 +1,8 @@
-
-
-
-
-
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-// const User = import('./models/UserModels.js');
 import User from './models/UserModels.js'
-// import User from './models/UserModels.js'
+
 
 
 dotenv.config();
@@ -81,9 +75,32 @@ app.post("/api/auth/login", async (req, res, next) => {
   }
 })
 
-const PORT = process.env.PORT || 5050;
+app.post("/api/auth/setavatar/:id", async (req, res, next) => {
+  try {
+    const userId = req.params.id;
+    const avatarImage = req.body.image;
+    const userData = await User.findByIdAndUpdate(
+      userId,
+      {
+        isAvatarImageSet: true,
+        avatarImage,
+      },
+      { new: true }
+    );
+    return res.json({
+      isSet: userData.isAvatarImageSet,
+      image: userData.avatarImage,
+    });
+  } catch (ex) {
+    next(ex);
+  }
+}
+)
 
+const PORT = process.env.PORT || 5050;
 app.listen(PORT, () => {
   console.log(`Server running on port: ${PORT}`);
   connectDB();
 });
+
+

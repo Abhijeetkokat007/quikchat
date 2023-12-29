@@ -27,7 +27,7 @@ function Register() {
   })
 
   useEffect(() => {
-    if (localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)) {
+    if (localStorage.getItem('quikchat-user')) {
       navigate("/");
     }
   }, []);
@@ -101,8 +101,8 @@ function Register() {
       <div className='form-container'>
         <form onSubmit={(event) => { handleSubmit(event) }}>
           <div className='brand'>
-            <img src={Logo} alt='' />
-            <h1>quikchat</h1>
+            <img className='img-r-logo' src={Logo} alt='' />
+            <h1 className='h1-r-heding'>quikchat</h1>
           </div>
           <input
             type='text'
@@ -128,8 +128,8 @@ function Register() {
             name='confirmPassword'
             onChange={(e) => { handleChange(e)}}
           />
-          <button type='submit'> Create User </button>
-          <span>already have an account ? <Link to="/">Login</Link></span>
+          <button type='submit' className='btn-submit'> Create User </button>
+          <span className='text-r-span'>already have an account ? <Link to="/">Login</Link></span>
 
         </form>
       </div>

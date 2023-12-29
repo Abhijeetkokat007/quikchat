@@ -14,10 +14,10 @@
     gap: 1rem;
     justify-content: center;
 }
-img {
+.img-r-logo {
  height: 5rem;
 }
-h1 {
+.h1-r-heding {
     color: white;
     text-transform: uppercase;
 }
@@ -43,7 +43,7 @@ input{
     }
 }
 
-button{
+.btn-submit{
     background-color: #997af0;
     color: white;
     padding: 1rem  2rem;
@@ -59,7 +59,7 @@ button{
         background-color: #4e0eff;
     }
 }
-span{
+.text-r-span{
     color: white;
     text-transform: uppercase;
 
