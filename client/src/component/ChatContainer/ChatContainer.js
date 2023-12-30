@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
-import ChatInput from "./ChatInput";
-import Logout from "./Logout";
+import ChatInput from "./../Contacts/Contacts";
+import Logout from "./../Logout/Logout";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 
@@ -13,7 +13,7 @@ export default function ChatContainer({ currentChat, socket }) {
 
   useEffect(async () => {
     const data = await JSON.parse(
-      localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
+      localStorage.getItem('quikchat-user')
     );
     const response = await axios.post(`/api/messages/getmsg`, {
       from: data._id,

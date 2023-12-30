@@ -11,6 +11,7 @@ import "react-toastify/dist/ReactToastify.css"
 function Login() {
 
   const navigate = useNavigate();
+  const [values, setValue] = useState({ username: "", password: "" })
   const toastOptions = {
     position: "bottom-right",
     autoClose: 8000,
@@ -19,22 +20,14 @@ function Login() {
     theme: "dark",
   };
 
-  const [values, setValue] = useState({
-    username: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  })
+ 
 
   useEffect(() => {
-    if (localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)) {
+    if (localStorage.getItem('quikchat-user')) {
       navigate("/");
     }
   }, []);
 
-  
-
-  
 
   const handleChange = (event) => {
     setValue({ ...values, [event.target.name]: event.target.value })

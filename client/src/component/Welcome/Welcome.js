@@ -6,7 +6,7 @@ export default function Welcome() {
   useEffect(async () => {
     setUserName(
       await JSON.parse(
-        localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
+        localStorage.getItem('quikchat-user')
       ).username
     );
   }, []);

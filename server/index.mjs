@@ -97,6 +97,16 @@ app.post("/api/auth/setavatar/:id", async (req, res, next) => {
 }
 )
 
+app.get("/api/auth/logout/:id", async (req, res, next) => {
+  try {
+    if (!req.params.id) return res.json({ msg: "User id is required " });
+    onlineUsers.delete(req.params.id);
+    return res.status(200).send();
+  } catch (ex) {
+    next(ex);
+  }
+} )
+
 const PORT = process.env.PORT || 5050;
 app.listen(PORT, () => {
   console.log(`Server running on port: ${PORT}`);

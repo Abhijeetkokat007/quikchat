@@ -8,7 +8,7 @@ export default function Contacts({ contacts, changeChat }) {
   const [currentSelected, setCurrentSelected] = useState(undefined);
   useEffect(async () => {
     const data = await JSON.parse(
-      localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
+      localStorage.getItem('quikchat-user')
     );
     setCurrentUserName(data.username);
     setCurrentUserImage(data.avatarImage);
