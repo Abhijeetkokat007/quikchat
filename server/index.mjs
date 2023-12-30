@@ -2,6 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import User from './models/UserModels.js'
+import Messages from './models/messageModel.js'
 
 
 
@@ -120,6 +121,30 @@ app.get("/api/auth/allusers/:id" ,  async (req, res, next) => {
     next(ex);
   }
 })
+
+app.get("/api/auth/getmsg/", async (req, res, next) => {
+  try {
+    const { from, to } = req.body;
+
+    const messages = await Messages.find({
+      users: {
+        $all: [from, to],
+      },
+    }).sort({ updatedAt: 1 });
+
+    const projectedMessages = messages.map((msg) => {
+      return {
+        fromSelf: msg.sender.toString() === from,
+        message: msg.message.text,
+      };
+    });
+    res.json(projectedMessages);
+  } catch (ex) {
+    next(ex);
+  }
+})
+
+
 
 const PORT = process.env.PORT || 5050;
 app.listen(PORT, () => {
