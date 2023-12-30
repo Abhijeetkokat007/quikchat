@@ -107,6 +107,20 @@ app.get("/api/auth/logout/:id", async (req, res, next) => {
   }
 } )
 
+app.get("/api/auth/allusers/:id" ,  async (req, res, next) => {
+  try {
+    const users = await User.find({ _id: { $ne: req.params.id } }).select([
+      "email",
+      "username",
+      "avatarImage",
+      "_id",
+    ]);
+    return res.json(users);
+  } catch (ex) {
+    next(ex);
+  }
+})
+
 const PORT = process.env.PORT || 5050;
 app.listen(PORT, () => {
   console.log(`Server running on port: ${PORT}`);
