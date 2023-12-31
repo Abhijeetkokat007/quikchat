@@ -26,7 +26,7 @@ export default function ChatContainer({ currentChat, socket }) {
     const getCurrentChat = async () => {
       if (currentChat) {
         await JSON.parse(
-          localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
+          localStorage.getItem('quikchat-user')
         )._id;
       }
     };
@@ -35,7 +35,7 @@ export default function ChatContainer({ currentChat, socket }) {
 
   const handleSendMsg = async (msg) => {
     const data = await JSON.parse(
-      localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)
+      localStorage.getItem('quikchat-user')
     );
     socket.current.emit("send-msg", {
       to: currentChat._id,
@@ -69,6 +69,12 @@ export default function ChatContainer({ currentChat, socket }) {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+ 
+  if (!currentChat) {
+    return <div> chat not available </div>; 
+  }
+
+  
   return (
     <Container>
       <div className="chat-header">
@@ -83,7 +89,7 @@ export default function ChatContainer({ currentChat, socket }) {
             <h3>{currentChat.username}</h3>
           </div>
         </div>
-        <Logout />
+        <Logout/>
       </div>
       <div className="chat-messages">
         {messages.map((message) => {
@@ -106,6 +112,9 @@ export default function ChatContainer({ currentChat, socket }) {
     </Container>
   );
 }
+
+
+
 
 const Container = styled.div`
   display: grid;

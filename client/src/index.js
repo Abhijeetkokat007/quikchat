@@ -7,14 +7,20 @@ import Register from './views/Register/Register'
 import Chat from "./views/Chat/Chat"
 import SetAvatar from './views/SetAvatar/SetAvatar';
 import Avatar from './views/Avatar/Avatar';
+import ChatContainer from './component/ChatContainer/ChatContainer';
+import ChatInput from './component/ChatInput/ChatInput';
+import Contacts from './component/Contacts/Contacts';
+import Welcome from './component/Welcome/Welcome';
+import Logout from './component/Logout/Logout';
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: '/login',
     element: <Login/>
   },
   {
-    path: '/chat',
+    path: '/',
     element: <Chat/>
   },
   {
@@ -24,11 +30,27 @@ const router = createBrowserRouter([
   {
     path: '/setavatar',
     element: <SetAvatar/>
-  },
-  {
-    path: '/avatar',
-    element: <Avatar/>
   }
+  // {
+  //   path: '/avatar',
+  //   element: <Avatar/>
+  // },
+  // {
+  //   path: '/chatcontainer',
+  //   element: <ChatContainer/>
+  // },
+  // {
+  //   path: '/chatinput',
+  //   element: <ChatInput/>
+  // },
+  // {
+  //   path: '/contacts',
+  //   element: <Contacts/>
+  // },
+  // {
+  //   path: '/welcome',
+  //   element: <Welcome/>
+  // }
 ])
 root.render( <RouterProvider router={router} />) ;
 

@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 // import { setAvatarRoute } from "../utils/APIRoutes";
 import './SetAvatar.css'
 
-function SetAvatar() {
+export default function SetAvatar() {
     const api = `https://api.multiavatar.com/4645646`;
     const navigate = useNavigate(); 
     const [avatars, setAvatars] = useState([]);
@@ -25,7 +25,7 @@ function SetAvatar() {
 
     useEffect(async () => {
         if (!localStorage.getItem('quikchat-user'))
-          navigate("/");
+          navigate("/login");
       }, []);
     
       const setProfilePicture = async () => {
@@ -107,4 +107,3 @@ function SetAvatar() {
 );
 }
 
-export default SetAvatar

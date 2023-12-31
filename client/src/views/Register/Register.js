@@ -32,14 +32,6 @@ function Register() {
     }
   }, []);
 
-  // const toastOptions = {
-  //   position: "bottom-right",
-  //   autoClose: 8000,
-  //   pauseOnHover: true,
-  //   draggable: true,
-  //   theme: "dark",
-  // }
-
   
 
   const handleChange = (event) => {
@@ -56,7 +48,7 @@ function Register() {
       toast.error("Username should be greater than 5 characters", toastOptions);
       return false;
     }
-    else if (password == "") {
+    else if (password.length < 8) {
       toast.error("password should be equal or greater than 8 characters", toastOptions);
       return false;
     }
@@ -99,9 +91,9 @@ function Register() {
   return (
     <>
       <div className='form-container'>
-        <form onSubmit={(event) => { handleSubmit(event) }}>
+        <form onSubmit={(event) =>  handleSubmit(event) }>
           <div className='brand'>
-            <img className='img-r-logo' src={Logo} alt='' />
+            <img className='img-r-logo' src={Logo} alt='logo' />
             <h1 className='h1-r-heding'>quikchat</h1>
           </div>
           <input

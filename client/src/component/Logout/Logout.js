@@ -10,7 +10,7 @@ export default function Logout() {
     const id = await JSON.parse(
       localStorage.getItem('quikchat-user')
     )._id;
-    const data = await axios.get(`/api/auth/logout/${id}`);
+    const data = await axios.get(`${`/api/auth/logout`}/${id}`);
     if (data.status === 200) {
       localStorage.clear();
       navigate("/login");

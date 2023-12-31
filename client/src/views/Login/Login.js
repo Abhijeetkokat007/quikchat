@@ -2,16 +2,16 @@ import React from 'react'
 import axios from "axios";
 import { Link , useNavigate} from 'react-router-dom';
 import Logo from "./../../assets/logo.svg";
-import "./Login.css"
+import "./Login.css" 
 import { useState, useEffect } from 'react';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"
 
 
-function Login() {
+export default function Login() {
 
   const navigate = useNavigate();
-  const [values, setValue] = useState({ username: "", password: "" })
+  const [values, setValues] = useState({ username: "", password: "" });
   const toastOptions = {
     position: "bottom-right",
     autoClose: 8000,
@@ -19,44 +19,36 @@ function Login() {
     draggable: true,
     theme: "dark",
   };
-
- 
-
   useEffect(() => {
     if (localStorage.getItem('quikchat-user')) {
       navigate("/");
     }
   }, []);
 
-
   const handleChange = (event) => {
-    setValue({ ...values, [event.target.name]: event.target.value })
-  }
+    setValues({ ...values, [event.target.name]: event.target.value });
+  };
 
-  const handleValidation = () => {
-    const { password, username } = values;
-    if (password === "") {
-      toast.error("Enter Correct Password ", toastOptions);
+  const validateForm = () => {
+    const { username, password } = values;
+    if (username === "") {
+      toast.error("Email and Password is required.", toastOptions);
+      return false;
+    } else if (password === "") {
+      toast.error("Email and Password is required.", toastOptions);
       return false;
     }
-    else if (username.length === "") {
-      toast.error("Username and Password is require", toastOptions);
-      return false;
-    }
-   
     return true;
-  }
-  
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if(handleValidation()) {
-     try{
-      const { password,  username } = values;
-      const {data} = await axios.post("/api/auth/login", {
-       username,
-       password,
-      
-      })
+    if (validateForm()) {
+      const { username, password } = values;
+      const { data } = await axios.post(`/api/auth/login`, {
+        username,
+        password,
+      });
       if (data.status === false) {
         toast.error(data.msg, toastOptions);
       }
@@ -65,16 +57,11 @@ function Login() {
           'quikchat-user',
           JSON.stringify(data.user)
         );
-        toast.error(" Login Successfully ", toastOptions);
+
         navigate("/");
       }
-     }
-     catch(e){
-      toast.error(e.message, toastOptions);
-     }
-      
     }
-  }
+  };
 
   
   return (
@@ -110,4 +97,4 @@ function Login() {
   )
 }
 
-export default Login
+

@@ -3,11 +3,11 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import User from './models/UserModels.js'
 import Messages from './models/messageModel.js'
-
+// import socket from 'socket.io'
+import { Server, Socket } from 'socket.io';
 
 
 dotenv.config();
-
 const app = express();
 app.use(express.json());
 
@@ -23,31 +23,31 @@ const connectDB = async () => {
 };
 
 const comparePasswords = (password, hashedPassword) => {
-  // Replace this with your actual password comparison logic
+
   return password === hashedPassword;
 };
 
 app.post("/api/auth/register", async (req, res, next) => {
   try {
-        const { username, email, password } = req.body;
-        const usernameCheck = await User.findOne( {username} );
-        if (usernameCheck)
-          return res.json({ msg: "Username already used", status: false });
-        const emailCheck = await User.findOne( {email} );
-        if (emailCheck)
-          return res.json({ msg: "Email already used", status: false });
+    const { username, email, password } = req.body;
+    const usernameCheck = await User.findOne({ username });
+    if (usernameCheck)
+      return res.json({ msg: "Username already used", status: false });
+    const emailCheck = await User.findOne({ email });
+    if (emailCheck)
+      return res.json({ msg: "Email already used", status: false });
 
-        const user = await User.create({
-          email,
-          username,
-          password,
-        });
-        delete user.password;
-        return res.json({ status: true, user });
-      } catch (ex) {
-        next(ex);
-        console.log(ex.message)
-      }
+    const user = await User.create({
+      email,
+      username,
+      password,
+    });
+    delete user.password;
+    return res.json({ status: true, user });
+  } catch (ex) {
+    next(ex);
+    console.log(ex.message)
+  }
 })
 
 app.post("/api/auth/login", async (req, res, next) => {
@@ -63,10 +63,10 @@ app.post("/api/auth/login", async (req, res, next) => {
       return res.json({ msg: "password incorrect", status: false });
     }
 
-    
+
 
     if (pass) {
-      return res.json({  status: true, user });
+      return res.json({ status: true, user });
     } else {
 
       return res.json({ msg: "Invalid password", status: false });
@@ -106,9 +106,9 @@ app.get("/api/auth/logout/:id", async (req, res, next) => {
   } catch (ex) {
     next(ex);
   }
-} )
+})
 
-app.get("/api/auth/allusers/:id" ,  async (req, res, next) => {
+app.get("/api/auth/allusers/:id", async (req, res, next) => {
   try {
     const users = await User.find({ _id: { $ne: req.params.id } }).select([
       "email",
@@ -146,10 +146,38 @@ app.get("/api/auth/getmsg/", async (req, res, next) => {
 
 
 
+
 const PORT = process.env.PORT || 5050;
 app.listen(PORT, () => {
   console.log(`Server running on port: ${PORT}`);
   connectDB();
 });
+
+
+
+
+// const io = new Socket(Server, {
+//   cors: {
+//     origin: "http://localhost:3000",
+//     credentials: true,
+//   },
+// });
+
+
+
+// global.onlineUsers = new Map();
+// io.on("connection", (socket) => {
+//   global.chatSocket = socket;
+//   socket.on("add-user", (userId) => {
+//     onlineUsers.set(userId, socket.id);
+//   });
+
+//   socket.on("send-msg", (data) => {
+//     const sendUserSocket = onlineUsers.get(data.to);
+//     if (sendUserSocket) {
+//       socket.to(sendUserSocket).emit("msg-recieve", data.msg);
+//     }
+//   });
+// });
 
 
