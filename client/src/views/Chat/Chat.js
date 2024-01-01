@@ -17,7 +17,7 @@ export default function Chat() {
 
   useEffect(async () => {
     if (!localStorage.getItem('quikchat-user')) {
-      // navigate("/login");
+      navigate("/login");
     } else {
       setCurrentUser(
         await JSON.parse(
@@ -50,13 +50,13 @@ export default function Chat() {
   return (
     <div>
       <div className="container">
-        <Contacts contacts={contacts} changeChat={handleChatChange} />
+        {/* <Contacts contacts={contacts} changeChat={handleChatChange} /> */}
         {currentChat === undefined ? (
           <Welcome />
         ) : (
           <ChatContainer currentChat={currentChat} socket={socket} />
         )}
-        {/* Additional content */}
+        Additional content
       </div>
     </div>
   );

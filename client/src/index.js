@@ -30,27 +30,27 @@ const router = createBrowserRouter([
   {
     path: '/setavatar',
     element: <SetAvatar/>
+  },
+  {
+    path: '/avatar',
+    element: <Avatar/>
+  },
+  {
+    path: '/chatcontainer',
+    element: <ChatContainer/>
+  },
+  {
+    path: '/chatinput',
+    element: <ChatInput/>
+  },
+  {
+    path: '/contacts',
+    element: <Contacts/>
+  },
+  {
+    path: '/welcome',
+    element: <Welcome/>
   }
-  // {
-  //   path: '/avatar',
-  //   element: <Avatar/>
-  // },
-  // {
-  //   path: '/chatcontainer',
-  //   element: <ChatContainer/>
-  // },
-  // {
-  //   path: '/chatinput',
-  //   element: <ChatInput/>
-  // },
-  // {
-  //   path: '/contacts',
-  //   element: <Contacts/>
-  // },
-  // {
-  //   path: '/welcome',
-  //   element: <Welcome/>
-  // }
 ])
 root.render( <RouterProvider router={router} />) ;
 

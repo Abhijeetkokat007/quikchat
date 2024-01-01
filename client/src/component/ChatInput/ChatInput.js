@@ -16,12 +16,14 @@ export default function ChatInput({ handleSendMsg }) {
     let message = msg;
     message += emojiObject.emoji;
     setMsg(message);
+    console.log('message = ', message);
   };
 
   const sendChat = (event) => {
     event.preventDefault();
     if (msg.length > 0) {
       handleSendMsg(msg);
+      
       setMsg("");
     }
   };

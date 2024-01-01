@@ -26,6 +26,7 @@ const comparePasswords = (password, hashedPassword) => {
 
   return password === hashedPassword;
 };
+0
 
 app.post("/api/auth/register", async (req, res, next) => {
   try {
