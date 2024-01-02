@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import User from './models/UserModels.js'
 import Messages from './models/messageModel.js'
-// import socket from 'socket.io'
+import socket from 'socket.io'
 import { Server, Socket } from 'socket.io';
 
 
@@ -157,28 +157,28 @@ app.listen(PORT, () => {
 
 
 
-// const io = new Socket(Server, {
-//   cors: {
-//     origin: "http://localhost:3000",
-//     credentials: true,
-//   },
-// });
+const io = new Socket(Server, {
+  cors: {
+    origin: "http://localhost:3000",
+    credentials: true,
+  },
+});
 
 
 
-// global.onlineUsers = new Map();
-// io.on("connection", (socket) => {
-//   global.chatSocket = socket;
-//   socket.on("add-user", (userId) => {
-//     onlineUsers.set(userId, socket.id);
-//   });
+global.onlineUsers = new Map();
+io.on("connection", (socket) => {
+  global.chatSocket = socket;
+  socket.on("add-user", (userId) => {
+    onlineUsers.set(userId, socket.id);
+  });
 
-//   socket.on("send-msg", (data) => {
-//     const sendUserSocket = onlineUsers.get(data.to);
-//     if (sendUserSocket) {
-//       socket.to(sendUserSocket).emit("msg-recieve", data.msg);
-//     }
-//   });
-// });
+  socket.on("send-msg", (data) => {
+    const sendUserSocket = onlineUsers.get(data.to);
+    if (sendUserSocket) {
+      socket.to(sendUserSocket).emit("msg-recieve", data.msg);
+    }
+  });
+});
 
 
